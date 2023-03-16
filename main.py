@@ -17,8 +17,8 @@ bot: Bot = Bot(token=TOKEN)
 dp: Dispatcher = Dispatcher()
 
 
-def create_random_number():
-    
+def create_random_number() -> int:
+    return random.randint(1, 100)
 
 
 @dp.message(Command(commands=['start']))
