@@ -38,8 +38,8 @@ async def help_command(message: Message):
 
 @dp.message(Command(commands=['stat']))
 async def stat_comand(message: Message):
-    reload(messages_text)
-    await message.answer(messages_text.command_stat(message.from_user.id))
+    await message.answer(f"Всего игр сыграно: {USERS[message.from_user.id]['total_games']}.\n"
+                         f"Игр выиграно: {USERS[message.from_user.id]['wins']}")
 
 
 @dp.message(Command(commands=['cancel']))
@@ -87,8 +87,8 @@ async def numbers_answer(message: Message):
             USERS[message.from_user.id]['attempts'] -= 1
 
         if USERS[message.from_user.id]['attempts'] == 0:
-            reload(messages_text)
-            await message.answer(messages_text.game_over(message.from_user.id))
+            answer = f"{messages_text.GAME_OVER} {USERS[message.from_user.id]['secret_number']} \nДавайте сыграем еще?"
+            await message.answer(answer)
             USERS[message.from_user.id]['in_game'] = False
             USERS[message.from_user.id]['total_games'] += 1
 
@@ -98,10 +98,12 @@ async def numbers_answer(message: Message):
 
 @dp.message()
 async def other_anser(message: Message):
-    if USERS[message.from_user.id]['in_game']:
-        await message.answer('Мы же сейчас играем! Присылайте выши числа.')
-    else:
-        await message.answer('Давайте лучше сыграем в игру!')
+    if message.from_user.id not in USERS:
+        USERS[message.from_user.id] = CREATE_NEW_USER   
+        if USERS[message.from_user.id]['in_game']:
+            await message.answer('Мы же сейчас играем! Присылайте выши числа.')
+        else:
+            await message.answer('Давайте лучше сыграем в игру!')
 
 
 if __name__ == "__main__":
