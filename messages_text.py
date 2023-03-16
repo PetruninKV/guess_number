@@ -15,9 +15,10 @@ COMMAND_HELP = f"""\
 Давай сыграем?
 Отправь положительный ответ обратным сообщением"""
 
-COMMAND_STAT = f"""\
-Всего игр сыграно: {config.USER['total_games']}
-Игр выиграно: {config.USER['wins']}"""
+def command_stat(id):
+    return f"""\
+Всего игр сыграно: {config.USERS[id]['total_games']}
+Игр выиграно: {config.USERS[id]['wins']}"""
 
 
 POSITIVE_RESPONSES = [
@@ -49,7 +50,9 @@ UPSET = """\
 ERROR_MES_IN_GAME2 = """\
 Мы же сейчас с вами играем. Присылайте, пожалуйста, числа от 1 до 100"""
 
-GAME_OVER = f"""\
+
+def game_over(id):
+    return f"""\
 К сожалению, у вас больше не осталось попыток. Вы проиграли :(
-Мое число было {config.USER["secret_number"]}
+Мое число было {config.USERS[id]["secret_number"]}
 Давайте сыграем еще?"""
