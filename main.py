@@ -1,6 +1,7 @@
 import random
 import os
 from dotenv import load_dotenv
+from importlib import reload
 
 import messages_text
 from config import ATTEMPTS, USER
@@ -34,6 +35,7 @@ async def help_command(message: Message):
 
 @dp.message(Command(commands=['stat']))
 async def stat_comand(message: Message):
+    reload(messages_text)
     await message.answer(messages_text.COMMAND_STAT)
 
 
@@ -78,6 +80,7 @@ async def numbers_answer(message: Message):
             USER['attempts'] -= 1
 
         if USER['attempts'] == 0:
+            reload(messages_text)
             await message.answer(messages_text.GAME_OVER)
             USER['in_game'] = False
             USER['total_games'] += 1
