@@ -41,7 +41,11 @@ async def stat_comand(message: Message):
 
 @dp.message(Command(commands=['cancel']))
 async def cancle_comand(message: Message):
-    pass
+    if USER['in_game']:
+        await message.answer('Вы вышли из игры. Захотите сыграть снова - напишите!')
+        USER['in_game'] = False
+    else:
+        await message.answer('Мы с вами итак не играли. Может, сыграем раунд?')
 
 
 @dp.message(Text(text=messages_text.POSITIVE_RESPONSES, ignore_case=True))
