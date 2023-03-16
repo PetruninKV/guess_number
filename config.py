@@ -1,5 +1,6 @@
 ATTEMPTS: int = 5
-USER: dict = {
+USERS: dict = {}
+CREATE_NEW_USER: dict = {
             'in_game': False,
             'secret_number': None,
             'attempts': None,
